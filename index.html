@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamster Tap</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffcc00;
+            font-family: Arial, sans-serif;
+        }
+        #playButton {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: red;
+            border: none;
+            cursor: pointer;
+        }
+        #hamster {
+            width: 200px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            display: none;
+        }
+        #count {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button id="playButton">ЖМИ</button>
+    <iframe id="soundFrame" width="0" height="0" style="border: none;" 
+        src="https://www.myinstants.com/instant/stony-liutie-31941/embed/">
+    </iframe>
+    
+    <img id="hamster" src="https://i.imgur.com/JZ1B1Nh.png" alt="Hamster">
+    <div id="count">0</div>
+
+    <script>
+        let count = 0;
+        const playButton = document.getElementById("playButton");
+        const soundFrame = document.getElementById("soundFrame");
+        const hamster = document.getElementById("hamster");
+        const countDisplay = document.getElementById("count");
+
+        function startGame() {
+            try {
+                soundFrame.contentWindow.document.querySelector('button')?.click();
+            } catch (e) {
+                console.error("Ошибка автозапуска звука.");
+            }
+            playButton.style.display = "none"; // Убираем кнопку
+            hamster.style.display = "block"; // Показываем хомяка
+            countDisplay.style.display = "block"; // Показываем счётчик
+        }
+
+        playButton.addEventListener("click", startGame);
+        window.onload = () => setTimeout(() => playButton.click(), 1000); // Автонажатие через 1 сек
+
+        hamster.addEventListener("click", () => {
+            count++;
+            countDisplay.textContent = count;
+            hamster.style.transform = "scale(0.9)";
+            setTimeout(() => hamster.style.transform = "scale(1)", 100);
+        });
+    </script>
+</body>
+</html>
